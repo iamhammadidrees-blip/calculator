@@ -1,43 +1,52 @@
- // 1. Prompt for the first number
-    const input1 = prompt("Enter the first number:");
-    const num1 = parseFloat(input1);
+// Prompt the user until they enter a valid number
+function getNumber(message) {
+  let value, num;
+  do {
+    value = prompt(message);
+    num = parseFloat(value);
+  } while (isNaN(num));
+  return num;
+}
 
-    // 2. Prompt for the second number
-    const input2 = prompt("Enter the second number:");
-    const num2 = parseFloat(input2);
-
-    // 3. Prompt for the operator
-    const operator = prompt(
+// Prompt until the user enters a supported operator
+function getOperator() {
+  const valid = ['+', '-', '*', '/'];
+  let op;
+  do {
+    op = prompt(
       "Choose an operation:\n" +
       "+ for addition\n" +
       "- for subtraction\n" +
       "* for multiplication\n" +
       "/ for division"
     );
+  } while (!valid.includes(op));
+  return op;
+}
 
-    // 4. Perform the calculation
-    let result;
-    switch (operator) {
-      case "+":
-        result = num1 + num2;
-        break;
-      case "-":
-        result = num1 - num2;
-        break;
-      case "*":
-        result = num1 * num2;
-        break;
-      case "/":
-        result = num1 / num2;
-        break;
-      default:
-        console.error("Invalid operator:", operator);
-        throw new Error("Operation not supported.");
-    }
+// Perform the arithmetic based on operator
+function calculate(a, b, op) {
+  switch (op) {
+    case '+': return a + b;
+    case '-': return a - b;
+    case '*': return a * b;
+    case '/': return a / b;
+  }
+}
 
-    // 5. Log the outcome
+// Display the result (you can swap console.log for alert or DOM output)
+function displayResult(a, b, op, result) {
+  alert(`${a} ${op} ${b} = ${result}`);
+}
 
-// … your prompt() + switch() logic here …
+// Orchestrator: ties all steps together
+function main() {
+  const num1     = getNumber("Enter the first number:");
+  const num2     = getNumber("Enter the second number:");
+  const operator = getOperator();
+  const result   = calculate(num1, num2, operator);
+  displayResult(num1, num2, operator, result);
+}
 
-// show the result in a dialog
-alert(`${num1} ${operator} ${num2} = ${result}`);
+// Kick things off
+main();
